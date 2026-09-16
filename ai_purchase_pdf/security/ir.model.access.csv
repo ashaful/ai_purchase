@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ai_purchase_document_user,ai.purchase.document purchase user,model_ai_purchase_document,purchase.group_purchase_user,1,1,1,1
+access_ai_purchase_document_line_user,ai.purchase.document.line purchase user,model_ai_purchase_document_line,purchase.group_purchase_user,1,1,1,1

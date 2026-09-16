@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_form_ai_purchase_pdf" model="ir.ui.view">
+        <field name="name">purchase.order.form.ai.purchase.pdf</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_ai_purchase_document" type="object" class="oe_stat_button"
+                        icon="fa-file-pdf-o" invisible="not ai_purchase_document_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">AI Source PDF</span>
+                    </div>
+                </button>
+            </xpath>
+
+            <xpath expr="//sheet/notebook" position="before">
+                <field name="ai_purchase_document_id" invisible="1"/>
+                <field name="ai_approval_state" invisible="1"/>
+                <div class="alert alert-warning" role="alert"
+                     invisible="not ai_purchase_document_id or ai_approval_state == 'approved'">
+                    <strong>Human approval required:</strong>
+                    this RFQ was created from an AI-processed supplier PDF and cannot be confirmed until approval is completed from the AI Source PDF record.
+                </div>
+            </xpath>
+
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="AI Source &amp; Approval" name="ai_purchase_source" invisible="not ai_purchase_document_id">
+                    <group>
+                        <group>
+                            <field name="ai_purchase_document_id" readonly="1"/>
+                            <field name="ai_approval_state" readonly="1" widget="badge"/>
+                        </group>
+                        <group>
+                            <field name="ai_approved_by_id" readonly="1"/>
+                            <field name="ai_approved_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <button name="action_open_ai_purchase_document" type="object" string="Open Source PDF &amp; Approval"
+                            class="oe_highlight"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
