@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ai_purchase_pdf" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.ai.purchase.pdf</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="purchase.res_config_settings_view_form_purchase"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@name='purchase_setting_container']" position="after">
+                <block title="AI Purchase PDF" name="ai_purchase_pdf_setting_container">
+                    <setting id="ai_purchase_processing_mode"
+                             string="PDF Processing Mode"
+                             help="Choose No API Test Mode for local text-based PDF testing, or OpenAI API for AI extraction.">
+                        <field name="ai_purchase_processing_mode"/>
+                        <div class="text-muted mt8" invisible="ai_purchase_processing_mode != 'local_test'">
+                            No API Test Mode makes no external AI call. It works only with PDFs that contain selectable/embedded text; scanned image-only PDFs require OCR/AI.
+                        </div>
+                    </setting>
+
+                    <setting id="ai_purchase_openai_credentials"
+                             string="OpenAI PDF Extraction"
+                             help="Used only when Processing Mode is OpenAI API."
+                             invisible="ai_purchase_processing_mode != 'openai'">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="ai_purchase_openai_api_key" class="col-lg-4 o_light_label"/>
+                                <field name="ai_purchase_openai_api_key" password="True" placeholder="sk-..."/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="ai_purchase_openai_model" class="col-lg-4 o_light_label"/>
+                                <field name="ai_purchase_openai_model" placeholder="gpt-5.6-luna"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="ai_purchase_openai_endpoint" class="col-lg-4 o_light_label"/>
+                                <field name="ai_purchase_openai_endpoint"/>
+                            </div>
+                        </div>
+                    </setting>
+
+                    <setting id="ai_purchase_default_approver"
+                             string="Default Human Approver"
+                             help="The default employee who receives the review activity after an RFQ is created.">
+                        <field name="ai_purchase_default_approver_id"/>
+                    </setting>
+
+                    <setting id="ai_purchase_matching"
+                             string="Master Data Matching"
+                             help="AI never creates vendors or products. Existing records are matched and uncertain matches are sent for human review.">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="ai_purchase_match_threshold" class="col-lg-4 o_light_label"/>
+                                <field name="ai_purchase_match_threshold"/>
+                            </div>
+                        </div>
+                    </setting>
+
+                    <setting id="ai_purchase_limits" string="Processing Limits">
+                        <div class="content-group">
+                            <div class="row mt16">
+                                <label for="ai_purchase_max_file_mb" class="col-lg-4 o_light_label"/>
+                                <field name="ai_purchase_max_file_mb"/>
+                            </div>
+                            <div class="row mt8">
+                                <label for="ai_purchase_timeout" class="col-lg-4 o_light_label"/>
+                                <field name="ai_purchase_timeout"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

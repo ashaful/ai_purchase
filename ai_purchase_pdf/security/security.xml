@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ai_purchase_document_company_rule" model="ir.rule">
+        <field name="name">AI Purchase Documents: multi-company</field>
+        <field name="model_id" ref="model_ai_purchase_document"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+
+    <record id="ai_purchase_document_line_company_rule" model="ir.rule">
+        <field name="name">AI Purchase Document Lines: multi-company</field>
+        <field name="model_id" ref="model_ai_purchase_document_line"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+</odoo>
